@@ -1,4 +1,4 @@
-package com.biacode.biacentric.demeter.demeter
+package com.biacode.biacentric.demeter
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
