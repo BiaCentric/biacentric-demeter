@@ -2,6 +2,7 @@ buildscript {
     ext {
         kotlinVersion = '1.1.51'
         springBootVersion = '2.0.0.M6'
+        apacheCommonsExecVersion = '1.10'
     }
     repositories {
         mavenCentral()
@@ -52,6 +53,8 @@ dependencies {
     // kotlin dependencies
     compile("org.jetbrains.kotlin:kotlin-stdlib-jre8")
     compile("org.jetbrains.kotlin:kotlin-reflect")
+    // others
+    compile("org.zeroturnaround:zt-exec:$apacheCommonsExecVersion")
     // test dependencies
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("io.projectreactor:reactor-test")
