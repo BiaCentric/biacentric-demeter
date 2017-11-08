@@ -1,14 +1,17 @@
 package com.biacode.biacentric.demeter.controller
 
 import com.biacode.biacentric.demeter.model.User
+import com.biacode.biacentric.demeter.repository.exception.UserNotFoundException
 import com.biacode.biacentric.demeter.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+
 
 /**
  * Created by Arthur Asatryan.
@@ -16,12 +19,15 @@ import reactor.core.publisher.Mono
  * Time: 1:17 AM
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("user")
 class UserController {
 
     //region Dependencies
     @Autowired
     private lateinit var userService: UserService
+
+    @Autowired
+    private lateinit var webClient: WebClient
     //endregion
 
     //region Public methods
@@ -29,12 +35,26 @@ class UserController {
     fun create(@RequestParam email: String, @RequestParam password: String): Mono<User> = userService
             .create(email, password)
 
-    @GetMapping("by-email")
-    fun getByEmail(@RequestParam email: String): Mono<User> = userService
+    @GetMapping("email/{email}")
+    fun getByEmail(@PathVariable email: String): Mono<User> = userService
             .getByEmail(email)
 
     @GetMapping("all")
     fun getAll(): Flux<User> = userService.getAll()
+
+    @ExceptionHandler(UserNotFoundException::class)
+    fun handleNotFound(): ResponseEntity<UserNotFoundException> {
+        return ResponseEntity.notFound().build()
+    }
+
+    @GetMapping("client")
+    fun clientRequest(): Flux<*> {
+        return webClient.get().uri("https://jsonplaceholder.typicode.com/posts")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve().bodyToFlux(Post::class.java)
+    }
     //endregion
+
+    data class Post(val userId: Long, val id: Long, val title: String, val body: String)
 
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="application/javascript">
+    var source = new EventSource("http://localhost:8080/demo/stream");
+    source.onmessage = function (event) {
+        if (event.data === 10) {
+            source.disconnect()
+        }
+        console.log(event.data)
+    };
+    source.onerror = function (error) {
+        console.log(error)
+    };
+</script>
+</body>
+</html>
