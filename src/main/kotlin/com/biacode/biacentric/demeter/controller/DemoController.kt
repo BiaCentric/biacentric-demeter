@@ -5,10 +5,12 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ServerWebExchange
+import org.zeroturnaround.exec.ProcessExecutor
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toMono
 import java.time.Duration
+
 
 /**
  * Created by Arthur Asatryan.
@@ -18,6 +20,11 @@ import java.time.Duration
 @RestController
 @RequestMapping("/demo")
 class DemoController {
+
+    @GetMapping("execute")
+    fun execute() {
+        ProcessExecutor().command("java", "-version").execute()
+    }
 
     @GetMapping("/hello")
     fun hello(@RequestParam name: String): Mono<String> = "hello $name".toMono()
