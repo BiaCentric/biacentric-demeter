@@ -26,6 +26,10 @@ group = 'com.biacode.biacentric.demeter'
 version = '0.0.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
+springBoot {
+    mainClassName = 'com.biacode.biacentric.demeter.DemeterApplication'
+}
+
 bootJar {
     launchScript {
     }

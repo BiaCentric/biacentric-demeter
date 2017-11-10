@@ -116,7 +116,7 @@ class ReactiveTests {
 
     @Test
     fun `with long running task`() {
-        Flux.interval(Duration.ofSeconds(1)).take(10).let {
+        Flux.interval(Duration.ofMillis(1)).take(10).let {
             create(it)
                     .expectNextCount(10)
                     .verifyComplete()
