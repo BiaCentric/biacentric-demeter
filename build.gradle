@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlinVersion = '1.1.51'
+        kotlinVersion = '1.2.10'
         springBootVersion = '2.0.0.M6'
         ztExecVersion = '1.10'
     }
@@ -55,7 +55,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-webflux")
     compile("org.springframework.boot:spring-boot-devtools")
     // kotlin dependencies
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jre8")
     compile("org.jetbrains.kotlin:kotlin-reflect")
     // others
     compile("org.zeroturnaround:zt-exec:$ztExecVersion")
